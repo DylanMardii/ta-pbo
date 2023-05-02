@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 01:40 AM
+-- Generation Time: May 03, 2023 at 01:47 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -157,8 +157,9 @@ CREATE TABLE `penyetokan` (
 --
 
 INSERT INTO `penyetokan` (`id`, `idInvoice`, `idProduk`, `sku`, `barcode`, `nama`, `kuantitas`, `harga`) VALUES
-('MS-1683002345-grV6LmVRvZ', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', '5', '35000'),
-('MS-1683070402-0mttJRvFmO', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', '5', '100000');
+('MS-1683070402-0mttJRvFmO', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', '5', '100000'),
+('MS-1683071122-2GQ1IgIAWh', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', '5', '35000'),
+('MS-1683071127-nBkPEZ1D4z', 'IM-1682602365-wm3vIc7T7S', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', '5', '22000');
 
 -- --------------------------------------------------------
 
@@ -189,8 +190,8 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`id`, `sku`, `barcode`, `nama`, `image`, `kategori`, `deskripsi`, `lokasi`, `harga_beli`, `harga_jual`, `stok`, `satuan`, `dimensi`) VALUES
 ('produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', NULL, 'kategori-001', 'Rasa Jeruk', 'Rumah Ben', 35000, 40000, 65, 'satuan-001', '0'),
 ('produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', NULL, 'kategori-001', '', 'Rumah Ben 2', 100000, 20000, 10, 'satuan-001', '30 cm'),
-('produk-1682423328-r1GU4eW0Bm', '(90)DTL8713002537A1(91)250130', '8998667300675', 'Siladex Biru', NULL, 'kategori-1682422571-DOjROIvQd2', 'Batuk Pilek', '', 20000, 25000, 1, 'satuan-001', '20 cm'),
-('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 22000, 25000, 1, 'satuan-001', ''),
+('produk-1682423328-r1GU4eW0Bm', '(90)DTL8713002537A1(91)250130', '8998667300675', 'Siladex Biru', NULL, 'kategori-1682422571-DOjROIvQd2', 'Batuk Pilek', '', 20000, 25000, 11, 'satuan-001', '20 cm'),
+('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 22000, 25000, 6, 'satuan-001', ''),
 ('produk-1682487494-66CIjdZ8VW', '(90)MD265228049054(91)201210', '8992752011408', 'Vit Air Mineral', NULL, 'kategori-1682423528-jKgpWFRkar', '600 ml', 'UBM', 3500, 4000, 0, 'satuan-001', '600 ml');
 
 -- --------------------------------------------------------

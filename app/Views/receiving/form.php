@@ -109,7 +109,7 @@
                 <td class="align-middle"><?= $item['kuantitas'] ?></td>
                 <td class="align-middle"><?= $item['harga'] ?></td>
                 <td class="align-middle">
-                    <button type="button" class="btn btn-xs btn-danger" href="#" title="delete" onclick="processDeleteItem('<?= $item['idInvoice'] ?>', '<?= $item['idProduk'] ?>', '<?= $item['nama'] ?>')"><i class="fa-solid fa-trash-can bigger-120"></i></button>
+                    <button type="button" class="btn btn-xs btn-danger" href="#" title="delete" onclick="processDeleteItem('<?= $item['id'] ?>', '<?= $item['nama'] ?>')"><i class="fa-solid fa-trash-can bigger-120"></i></button>
                 </td>
             </tr>
             <?php $i++ ?>
@@ -230,7 +230,7 @@
         return false;
     }
 
-    async function processDeleteItem(invoiceId, productId, productName) {
+    async function processDeleteItem(entryId, productName) {
         let isTrue = confirm(`Apakah anda benar ingin menghapus ${productName}?`);
         if (isTrue) {
             fetch('/receiving/deleteProduct', {
@@ -238,7 +238,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `invoiceId=${invoiceId}&idProduct=${productId}`
+                body: `id=${entryId}`
             }).then((response) => response.json()).then((res) => {
                 window.location.href = `/receiving/form/${$('#invoiceId').val()}`;
             });

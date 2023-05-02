@@ -106,18 +106,17 @@ class Receiving extends BaseController
         helper('text');
         if ($this->role == null) return $this->unauthorized();
         if ($this->role != 'operator') return $this->forbidden();
-        $invoiceId = $this->request->getPost('invoiceId');
-        $idProduct = $this->request->getPost('idProduct');
+        $id = $this->request->getPost('id');
 
         $penyetokanModel = new \App\Models\PenyetokanModel();
         $produkModel = new \App\Models\ProdukModel();
-        $item = $penyetokanModel->where('idInvoice', $invoiceId)->where('idProduk', $idProduct)->first();
+        $item = $penyetokanModel->where('id', $id)->first();
 
         if ($item == null) {
             return $this->notFound('Entri tidak ditemukan.');
         }
 
-        $produk = $produkModel->where('id', $idProduct)->first();
+        $produk = $produkModel->where('id', $item['idProduk'])->first();
         if ($produk == null) {
             $penyetokanModel->delete($item['id']);
             return $this->success('Item berhasil dihapus.', 'receiving_message');
@@ -128,7 +127,7 @@ class Receiving extends BaseController
         }
 
         $penyetokanModel->delete($item['id']);
-        $produkModel->set('stok', $produk['stok'] - $item['kuantitas'], true)->where('id', $idProduct)->update();
+        $produkModel->set('stok', $produk['stok'] - $item['kuantitas'], true)->where('id', $item['idProduk'])->update();
         return $this->success('Item berhasil dihapus.', 'receiving_message');
     }
 
