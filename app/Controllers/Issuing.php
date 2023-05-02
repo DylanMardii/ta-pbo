@@ -110,25 +110,24 @@ class Issuing extends BaseController
         helper('text');
         if ($this->role == null) return $this->unauthorized();
         if ($this->role != 'operator') return $this->forbidden();
-        $invoiceId = $this->request->getPost('invoiceId');
-        $idProduct = $this->request->getPost('idProduct');
+        $id = $this->request->getPost('id');
 
         $penjualanModel = new \App\Models\PenjualanModel();
         $produkModel = new \App\Models\ProdukModel();
-        $item = $penjualanModel->where('idInvoice', $invoiceId)->where('idProduk', $idProduct)->first();
+        $item = $penjualanModel->where('id', $id)->first();
 
         if ($item == null) {
             return $this->notFound('Entri tidak ditemukan.');
         }
 
-        $produk = $produkModel->where('id', $idProduct)->first();
+        $produk = $produkModel->where('id', $item['idProduk'])->first();
         if ($produk == null) {
             $penjualanModel->delete($item['id']);
             return $this->success('Item berhasil dihapus.', 'issuing_message');
         }
 
         $penjualanModel->delete($item['id']);
-        $produkModel->set('stok', $produk['stok'] + $item['kuantitas'], true)->where('id', $idProduct)->update();
+        $produkModel->set('stok', $produk['stok'] + $item['kuantitas'], true)->where('id', $item['idProduk'])->update();
         return $this->success('Item berhasil dihapus.', 'issuing_message');
     }
 

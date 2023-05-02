@@ -10,20 +10,20 @@ class Dashboard extends BaseController
     protected $roleModel;
     public function __construct()
     {
-        if (!session()->has('user')) return redirect()->to('user/login');
-        $this->role = session()->get('user')['role'];
+        if (session()->has('user')) $this->role = session()->get('user')['role'];
         $this->roleModel = new \App\Models\RoleModel();
     }
 
     public function getUsers()
     {
+        if ($this->role != 'admin') return redirect()->to('user/login');
         $userModel = new \App\Models\UserModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
-                'users' => $userModel->select('user.*, role.label as role')->join('role', 'user.role = role.id', 'left')->paginate(5),
+                'users' => $userModel->like('username', $q)->orLike('name', $q)->select('user.*, role.label as role')->join('role', 'user.role = role.id', 'left')->paginate(5),
                 'total' => $userModel->countAll(),
                 'roles' => $this->roleModel->orderBy('label', 'asc')->findAll(),
                 'q' => $q
@@ -37,6 +37,7 @@ class Dashboard extends BaseController
 
     public function getIndex()
     {
+        if ($this->role == '') return redirect()->to('user/login');
         $measurementModel = new \App\Models\MeasurementModel();
         $produkModel = new \App\Models\ProdukModel();
         $kategoriModel = new \App\Models\KategoriModel();
@@ -56,6 +57,7 @@ class Dashboard extends BaseController
 
     public function getScanner()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
@@ -65,6 +67,7 @@ class Dashboard extends BaseController
 
     public function getIssuing()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $invKeluarModel = new \App\Models\InvKeluarModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
@@ -83,6 +86,7 @@ class Dashboard extends BaseController
 
     public function getReceiving()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $invMasuk = new \App\Models\InvMasukModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
@@ -100,6 +104,7 @@ class Dashboard extends BaseController
 
     public function getMeasurement()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $measurementModel = new \App\Models\MeasurementModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
@@ -117,6 +122,7 @@ class Dashboard extends BaseController
 
     public function getKategori()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $kategoriModel = new \App\Models\KategoriModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
@@ -134,6 +140,7 @@ class Dashboard extends BaseController
 
     public function getProduk()
     {
+        if ($this->role != 'operator') return redirect()->to('user/login');
         $kategoriModel = new \App\Models\KategoriModel();
         $satuanModel = new \App\Models\SatuanModel();
         $produkModel = new \App\Models\ProdukModel();
@@ -158,9 +165,19 @@ class Dashboard extends BaseController
         return view('dashboard/produk', $data);
     }
 
+    public function getKlien()
+    {
+        if ($this->role != 'manager') return redirect()->to('user/login');
+    }
+
+    public function getSupplier()
+    {
+        if ($this->role != 'manager') return redirect()->to('user/login');
+    }
+
     public function getLaporan()
     {
-
-        return view('dashboard/laporan');
+        if ($this->role != 'operator' || $this->role != 'manager') return redirect()->to('user/login');
+        return redirect()->to('cetak/laporan');
     }
 }

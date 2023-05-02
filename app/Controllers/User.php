@@ -141,6 +141,42 @@ class User extends BaseController
         return redirect()->to('user/login');
     }
 
+    public function postDashboardRegistration()
+    {
+        if (!$this->validate([
+            'name' => 'required',
+            'password' => 'required',
+            'username' => 'required|is_unique[user.username]',
+        ])) {
+            return $this->badRequest('Username sudah terdaftar!', 'user_message');
+        }
+
+        $id = 'user-' . md5(uniqid(rand(), true));
+        $username = $this->request->getVar('username');
+        $password = $this->request->getVar('password');
+        $role = $this->request->getVar('role');
+
+        $this->userModel->insert([
+            'id' => $id,
+            'name' => $this->request->getVar('name'),
+            'username' => $username,
+            'password' => password_hash((string) $password, PASSWORD_DEFAULT),
+            'role' => $role,
+        ]);
+        return $this->success('User berhasil didaftarkan.', 'user_message');
+    }
+
+    public function getData($id = null)
+    {
+        if ($id == null) return $this->badRequest('ID tidak ditemukan!');
+        $user = $this->userModel->select('name, username, role')->find($id);
+        if ($user) {
+            return $this->success('Data berhasil didapatkan.', 'user_data', $user);
+        } else {
+            return $this->badRequest('Data tidak ditemukan!');
+        }
+    }
+
     public function getChangePassword()
     {
         $data = [

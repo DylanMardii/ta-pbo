@@ -1,17 +1,17 @@
 <?= $this->extend('dashboard/template') ?>
 <?= $this->section('content') ?>
 <div>
-    <h3><i class="fa-solid fa-cart-shopping"></i> USER MANAGEMENT</h3>
+    <h3><i class="fa-solid fa-users"></i> USER MANAGEMENT</h3>
     <hr>
 </div>
 <div class="d-flex justify-content-between align-items-center">
     <div>
-        <span>Total terdapat <b><?= $data['total'] ?></b> produk.</span>
+        <span>Total terdapat <b><?= $data['total'] ?></b> users.</span>
     </div>
     <div class="d-flex">
         <div class="me-3">
             <form action="">
-                <input type="text" name="q" class="form-control" type="text" placeholder="Cari produk" aria-label="Cari produk" value="<?= $data['q'] ?>">
+                <input type="text" name="q" class="form-control" type="text" placeholder="Cari user" aria-label="Cari user" value="<?= $data['q'] ?>">
             </form>
         </div>
         <button type="button" class="btn btn-primary" onclick="prepareInsertForm();">
@@ -19,11 +19,11 @@
         </button>
     </div>
 </div>
-<div class="modal fade" id="produkModal" role="dialog" tabindex="-1" aria-labelledby="submit" aria-hidden="true">
+<div class="modal fade" id="userModal" role="dialog" tabindex="-1" aria-labelledby="submit" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="post" id="produkForm" class="modal-content">
+        <form method="post" id="userForm" class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="submit">Simpan data produk</h1>
+                <h1 class="modal-title fs-5" id="submit">Simpan data user</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -31,16 +31,26 @@
                     <input type="hidden" name="id" class="form-control" placeholder="id" aria-label="id" aria-describedby="basic-addon2" id="id">
                     <div class="col">
                         <label for="Nama" class="form-label mt-0">Nama*</label>
-                        <input required type="text" name="nama" class="form-control" placeholder="Nama" aria-label="Nama" aria-describedby="basic-addon2" id="Nama">
+                        <input required type="text" name="name" class="form-control" placeholder="Nama" aria-label="Nama" aria-describedby="basic-addon2" id="Nama">
                     </div>
                     <div class="col">
-                        <label for="roleSelect" class="form-label d-block mt-0" style="width: 100%;">ROle</label>
+                        <label for="Nama" class="form-label mt-0">Username*</label>
+                        <input required type="text" name="username" class="form-control" placeholder="Nama" aria-label="Nama" aria-describedby="basic-addon2" id="Nama">
+                    </div>
+                </div>
+                <div class="input-group row mx-0 mb-2">
+                    <div class="col">
+                        <label for="roleSelect" class="form-label d-block mt-0" style="width: 100%;">Role</label>
                         <select required id="roleSelect" name="role" class="form-control">
-                            <option></option>
+                            <option disabled selected value>Pilih Role</option>
                             <?php foreach ($data['roles'] as $role) :  ?>
                                 <option value="<?= $role['id'] ?>"><?= $role['label'] ?></option>
                             <?php endforeach;  ?>
                         </select>
+                    </div>
+                    <div class="col">
+                        <label for="Nama" class="form-label mt-0">Password*</label>
+                        <input required type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" id="Password">
                     </div>
                 </div>
             </div>
@@ -60,7 +70,7 @@
             <th class="text-center">Nama</th>
             <th class="text-center">Username</th>
             <th class="text-center">Role</th>
-            <th class="text-center">Avatar</th>
+            <!-- <th class="text-center">Avatar</th> -->
             <th class="text-center">Aksi</th>
         </thead>
         <tbody>
@@ -76,7 +86,7 @@
                     <td class="text-center align-middle"><?= htmlspecialchars($user['name']) ?></td>
                     <td class="text-center align-middle"><?= htmlspecialchars($user['username']) ?></td>
                     <td class="text-center align-middle"><?= htmlspecialchars($user['role']) ?></td>
-                    <td class="text-center align-middle"><?= htmlspecialchars($user['avatar']) ?></td>
+                    <!-- <td class="text-center align-middle"><?= htmlspecialchars($user['avatar']) ?></td> -->
                     <td class="text-center align-middle">
                         <button type="button" onclick="prepareEditForm('<?= $user['id'] ?>')" class="btn btn-xs btn-primary text-white" title="Edit">
                             <i class="fa fa-pencil bigger-120"></i>
@@ -101,8 +111,8 @@
 </link>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const produkFlashMessage = JSON.parse(`<?= json_encode(session()->getFlashdata('produk_message')) ?>`);
-    if (produkFlashMessage != null) {
+    const userFlashMessage = JSON.parse(`<?= json_encode(session()->getFlashdata('user_message')) ?>`);
+    if (userFlashMessage != null) {
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -116,64 +126,64 @@
         })
 
         Toast.fire({
-            icon: produkFlashMessage.status,
-            title: produkFlashMessage.message
+            icon: userFlashMessage.status,
+            title: userFlashMessage.message
         })
     }
 
-    const produkModal = new bootstrap.Modal('#produkModal')
+    const userModal = new bootstrap.Modal('#userModal')
 
     $(document).ready(function() {
         $('#kategoriSelect').select2({
             placeholder: 'Kategori',
             theme: 'bootstrap4',
-            dropdownParent: $("#produkModal"),
+            dropdownParent: $("#userModal"),
         });
         $('#satuanSelect').select2({
             placeholder: 'Satuan',
             theme: 'bootstrap4',
-            dropdownParent: $("#produkModal"),
+            dropdownParent: $("#userModal"),
         });
     });
 
-    $("#produkForm").submit(async (e) => {
-        fetch('/produk', {
+    $("#userForm").submit(async (e) => {
+        fetch('/user/dashboardRegistration', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: $('#produkForm').serialize()
+            body: $('#userForm').serialize()
         }).then((response) => response.json()).then((res) => {
-            window.location.href = '/dashboard/produk';
+            window.location.href = '';
         });
         e.preventDefault();
         return false;
     });
 
     async function prepareInsertForm(id) {
-        $("input").val('');
+        $("input:not([name='q'])").val('');
         $("select").val('');
         $("select").trigger('change');
-        produkModal.show();
+        userModal.show();
     }
 
     async function prepareEditForm(id) {
-        let res = await fetch('<?= base_url('produk/data/') ?>' + id)
+        let res = await fetch('<?= base_url('user/data/') ?>' + id)
         res = await res.json();
-        if (res.status != 'success') return alert('Terjadi kesalahan mengambil data produk.');
+        if (res.status != 'success') return alert('Terjadi kesalahan mengambil data user.');
         let data = res.data;
         Object.keys(data).forEach(key => {
             $("[name='" + key + "']").val(data[key]);
             $("[name='" + key + "']").trigger('change');
         });
-        produkModal.show();
+        userModal.show();
     }
 
     async function processDelete(name, id) {
         let isTrue = confirm(`Apakah anda benar ingin menghapus\n${name}?`);
         if (isTrue) {
-            let res = await fetch(`<?= base_url('produk/delete/') ?>${id}`);
-            window.location.href = '/dashboard/produk';
+            let res = await fetch(`<?= base_url('user/delete/') ?>${id}`);
+            window.location.href = '';
         }
     }
 </script>

@@ -47,7 +47,7 @@
                         <hr style="height: 2px;" class="bg-white">
                     </li>
                     <li class="nav-item">
-                        <a class="text-decoration-none text-white fw-medium" href="<?= base_url('cetak/laporan') ?>"><i class="me-2 fa-solid fa-fw fa-chart-simple"></i> Laporan</a>
+                        <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/laporan') ?>"><i class="me-2 fa-solid fa-fw fa-chart-simple"></i> Laporan</a>
                         <hr style="height: 2px;" class="bg-white">
                     </li>
                 <?php endif;  ?>
