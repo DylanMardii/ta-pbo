@@ -52,7 +52,7 @@ function terbilang($nilai)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laporan Stok Barang</title>
+    <title>Invoice Keluar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Libre+Barcode+EAN13+Text&display=swap" rel="stylesheet">
@@ -84,55 +84,68 @@ function terbilang($nilai)
                     <div style="font-size: 12px; text-align:center; margin-top: .25rem;">Tel: 0812-3456-7891 | WA: 0821-3456-8876 | E-Mail: mail@stockin.com </div>
                 </div>
                 <hr style="margin-top: 1rem; margin-bottom: 1rem;">
-                <h5 style=" font-size: 18px; text-align: center; margin: 0; padding-bottom: 0; margin-top: 10px;">Laporan Stok Barang</h5>
-                <p style="font-size: 12px; text-align: center; margin: 0; margin-top: .25rem; margin-bottom: .25rem;">Dicetak pada: <?= $date ?></p>
+                <h5 style=" font-size: 18px; margin: 0; padding-bottom: 0; margin-top: 10px;">Invoice Keluar</h5>
+                <table style="border: 1px solid white !important;" cellspacing="0" cellpadding="0">
+                    <tr style=" font-size: 12px;">
+                        <th style="text-align:left; padding-top: .5rem;">Dicetak pada</th>
+                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
+                        <td style="padding-top: .5rem"><?= $date ?></td>
+                    </tr>
+                    <tr style="font-size: 12px;">
+                        <th style="text-align:left; padding-top: .5rem;">Nomor Referensi</th>
+                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
+                        <td style="padding-top: .5rem"><?= $ref ?></td>
+                    </tr>
+                    <tr style="font-size: 12px;">
+                        <th style="text-align:left; padding-top: .5rem;">Klien</th>
+                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
+                        <td style="padding-top: .5rem"><?= $klien ?></td>
+                    </tr>
+                </table>
                 <table style="border: 1px solid black; text-align: center; margin-top: .75rem; margin-bottom: .75rem; width: 100%;" cellspacing="0">
                     <thead>
                         <tr style="font-size: 12px;">
                             <th style="border: 1px solid black; padding: .25rem .25rem;">No</th>
                             <th style="border: 1px solid black; padding: .25rem .25rem;">Barcode</th>
                             <th style="border: 1px solid black; padding: .25rem .25rem;">Nama</th>
-                            <th style="border: 1px solid black; padding: .25rem .25rem;">Kategori</th>
                             <th style="border: 1px solid black; padding: .25rem .25rem;">Jumlah</th>
-                            <th style="border: 1px solid black; padding: .25rem .25rem;">Harga Beli (satuan)</th>
-                            <th style="border: 1px solid black; padding: .25rem .25rem;">Harga Jual (satuan)</th>
+                            <th style="border: 1px solid black; padding: .25rem .25rem;">Harga</th>
                             <th style="border: 1px solid black; padding: .25rem .25rem;">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1;
-                        $totalJual = 0;
-                        $totalBeli = 0; ?>
+                        $totalBeli = 0;
+                        $jml = 0 ?>
                         <?php foreach ($products as $produk) : ?>
                             <tr style="font-size: 12px;">
                                 <td style="border: 1px solid black; padding: .25rem .25rem;" class="align-middle"><?= $i ?></td>
                                 <td style="border: 1px solid black; padding: .25rem .25rem; font-family: 'Consolas', monospace;" class="text-center align-middle"><?= $produk['barcode'] ?></td>
                                 <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= htmlspecialchars($produk['nama']) ?></td>
-                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= $produk['kategori'] ?></td>
-                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= $produk['stok'] ?> <?= $produk['satuan'] ?></td>
-                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($produk['harga_beli']) ?></td>
-                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($produk['harga_jual']) ?></td>
+                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= $produk['kuantitas'] ?></td>
+                                <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($produk['harga']) ?></td>
                                 <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($produk['subtotal']) ?></td>
                             </tr>
                             <?php $i++;
-                            $totalBeli += $produk['stok'] * $produk['harga_beli'];
-                            $totalJual += $produk['stok'] * $produk['harga_jual']; ?>
+                            $jml += $produk['kuantitas'];
+                            $totalBeli += $produk['kuantitas'] * $produk['harga']; ?>
                         <?php endforeach; ?>
+                        <tr style="font-size: 12px;">
+                            <td style="border: 1px solid black; padding: .25rem .25rem;" colspan="3" class="align-middle">Jumlah barang</td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= $jml ?></td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle">Total</td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($totalBeli); ?></td>
+                        </tr>
                     </tbody>
                 </table>
                 <table style="border: 1px solid white !important;">
                     <tr style="font-size: 12px;">
-                        <th style="text-align:right;">Total barang</th>
+                        <th style="text-align:left;">Total barang</th>
                         <th class="pe-2">:</th>
-                        <td><?= $total ?></td>
+                        <td><?= $i - 1 ?></td>
                     </tr>
                     <tr style="font-size: 12px;">
-                        <th style="text-align:right;">Total harga jual</th>
-                        <th class="pe-2">:</th>
-                        <td><?= rupiah($totalJual) ?> (<?= terbilang($totalJual) ?> rupiah)</td>
-                    </tr>
-                    <tr style="font-size: 12px;">
-                        <th style="text-align:right;">Total harga beli</th>
+                        <th style="text-align:left;">Total harga beli</th>
                         <th class="pe-2">:</th>
                         <td><?= rupiah($totalBeli) ?> (<?= terbilang($totalBeli) ?> rupiah)</td>
                     </tr>
@@ -143,7 +156,7 @@ function terbilang($nilai)
                         <div style="text-align: right;">
                             <div style="font-size: 14px; font-weight:700;margin-top:.5rem;">PT StockIn Indonesia</div>
                             <div style="font-size: 14px; margin-top:.5rem;">yang bertanda tangan di bawah ini</div>
-                            <div style="font-size: 14px; margin-top: 5rem; font-weight:700;">Manager</div>
+                            <div style="font-size: 14px; margin-top: 5rem; font-weight:700;"><?= session()->get('user')['name'] ?></div>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2023 at 03:56 AM
+-- Generation Time: May 02, 2023 at 07:15 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -91,10 +91,10 @@ CREATE TABLE `kategori` (
 INSERT INTO `kategori` (`id`, `label`, `deskripsi`) VALUES
 ('kategori-001', 'Sirup', 'Botol sirup'),
 ('kategori-1682422571-DOjROIvQd2', 'Obat', ''),
-('kategori-1682422579-So2CQh14hj', 'Hand Sanitizer', ''),
 ('kategori-1682423524-jfgvGGU8XF', 'Inhaler', ''),
 ('kategori-1682423528-jKgpWFRkar', 'Air Mineral', ''),
-('kategori-1682603161-VtDSU3RnSf', 'Meubel', '');
+('kategori-1682603161-VtDSU3RnSf', 'Meubel', ''),
+('kategori-1682906552-rQcrMky9ap', 'Hand Sanitizer', '');
 
 -- --------------------------------------------------------
 
@@ -123,9 +123,17 @@ CREATE TABLE `penjualan` (
   `sku` varchar(64) DEFAULT NULL,
   `barcode` varchar(64) DEFAULT NULL,
   `nama` varchar(255) NOT NULL,
-  `kuantitas` varchar(255) NOT NULL,
-  `harga` varchar(255) NOT NULL
+  `kuantitas` int(11) NOT NULL,
+  `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id`, `idInvoice`, `idProduk`, `sku`, `barcode`, `nama`, `kuantitas`, `harga`) VALUES
+('JS-1683002596-HWUGGDpSE3', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', 5, 35000),
+('JS-1683002708-lsmPwHo34S', 'IM-1682602365-wm3vIc7T7S', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', 1, 22000);
 
 -- --------------------------------------------------------
 
@@ -143,6 +151,13 @@ CREATE TABLE `penyetokan` (
   `kuantitas` varchar(255) NOT NULL,
   `harga` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `penyetokan`
+--
+
+INSERT INTO `penyetokan` (`id`, `idInvoice`, `idProduk`, `sku`, `barcode`, `nama`, `kuantitas`, `harga`) VALUES
+('MS-1683002345-grV6LmVRvZ', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', '5', '35000');
 
 -- --------------------------------------------------------
 
@@ -171,10 +186,10 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `sku`, `barcode`, `nama`, `image`, `kategori`, `deskripsi`, `lokasi`, `harga_beli`, `harga_jual`, `stok`, `satuan`, `dimensi`) VALUES
-('produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', NULL, 'kategori-001', 'Rasa Jeruk', 'Rumah Ben', 1, 2, 65, 'satuan-001', '0'),
+('produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', NULL, 'kategori-001', 'Rasa Jeruk', 'Rumah Ben', 35000, 40000, 65, 'satuan-001', '0'),
 ('produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', NULL, 'kategori-001', '', 'Rumah Ben 2', 100000, 20000, 10, 'satuan-001', '30 cm'),
 ('produk-1682423328-r1GU4eW0Bm', '(90)DTL8713002537A1(91)250130', '8998667300675', 'Siladex Biru', NULL, 'kategori-1682422571-DOjROIvQd2', 'Batuk Pilek', '', 20000, 25000, 1, 'satuan-001', '20 cm'),
-('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 22000, 25000, 2, 'satuan-001', ''),
+('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 22000, 25000, 1, 'satuan-001', ''),
 ('produk-1682487494-66CIjdZ8VW', '(90)MD265228049054(91)201210', '8992752011408', 'Vit Air Mineral', NULL, 'kategori-1682423528-jKgpWFRkar', '600 ml', 'UBM', 3500, 4000, 0, 'satuan-001', '600 ml');
 
 -- --------------------------------------------------------
@@ -226,7 +241,6 @@ INSERT INTO `satuan` (`id`, `label`, `deskripsi`) VALUES
 ('satuan-1682334432-kfIQlPEqhK', 'scht', 'sachet'),
 ('satuan-1682334444-jphsmX9w0l', 'klg', 'kaleng'),
 ('satuan-1682492190-Bsog0QtkOA', 'pak', ''),
-('satuan-1682492197-B3QWW1m8Du', 'bal', 'balance'),
 ('satuan-1682492207-5e1AFsPxuF', 'keping', ''),
 ('satuan-1682492252-GzSOiQtJNp', 'bar', ''),
 ('satuan-1682492257-LHJS9DehvT', 'unit', ''),

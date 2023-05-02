@@ -78,6 +78,9 @@
                         <a role="button" href="<?= base_url('issuing/form/' . $inv['id']) ?>" class="btn btn-xs btn-primary text-white" title="Edit">
                             <i class="fa fa-pencil"></i>
                         </a>
+                        <a role="button" href="<?= base_url('cetak/issuing/' . $inv['id']) ?>" class="btn btn-xs btn-warning text-black" title="Edit">
+                            <i class="fa fa-print"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php $i++ ?>

@@ -81,7 +81,7 @@ class Issuing extends BaseController
         }
 
         if ($produk['stok'] < $amount) {
-            return $this->badRequest('Stok produk kurang.', 'issuing_message');
+            return $this->badRequest('Stok produk kurang. Tersedia: ' . $produk['stok'], 'issuing_message');
         }
 
         $penjualanModel = new \App\Models\PenjualanModel();
