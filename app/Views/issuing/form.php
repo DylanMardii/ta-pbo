@@ -1,3 +1,53 @@
+<?php
+
+function rupiah($angka)
+{
+    $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+
+
+function penyebut($nilai)
+{
+    $nilai = abs($nilai);
+    $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+    $temp = "";
+    if ($nilai < 12) {
+        $temp = " " . $huruf[$nilai];
+    } else if ($nilai < 20) {
+        $temp = penyebut($nilai - 10) . " belas";
+    } else if ($nilai < 100) {
+        $temp = penyebut($nilai / 10) . " puluh" . penyebut($nilai % 10);
+    } else if ($nilai < 200) {
+        $temp = " seratus" . penyebut($nilai - 100);
+    } else if ($nilai < 1000) {
+        $temp = penyebut($nilai / 100) . " ratus" . penyebut($nilai % 100);
+    } else if ($nilai < 2000) {
+        $temp = " seribu" . penyebut($nilai - 1000);
+    } else if ($nilai < 1000000) {
+        $temp = penyebut($nilai / 1000) . " ribu" . penyebut($nilai % 1000);
+    } else if ($nilai < 1000000000) {
+        $temp = penyebut($nilai / 1000000) . " juta" . penyebut($nilai % 1000000);
+    } else if ($nilai < 1000000000000) {
+        $temp = penyebut($nilai / 1000000000) . " milyar" . penyebut(fmod($nilai, 1000000000));
+    } else if ($nilai < 1000000000000000) {
+        $temp = penyebut($nilai / 1000000000000) . " trilyun" . penyebut(fmod($nilai, 1000000000000));
+    }
+    return $temp;
+}
+
+function terbilang($nilai)
+{
+    if ($nilai < 0) {
+        $hasil = "minus " . trim(penyebut($nilai));
+    } else {
+        $hasil = trim(penyebut($nilai));
+    }
+    return $hasil;
+}
+
+?>
+
 <?= $this->extend('dashboard/template') ?>
 <?= $this->section('content') ?>
 <div class="modal fade" id="inputProdukModal" role="dialog" tabindex="-1" aria-labelledby="submit" aria-hidden="true">
@@ -91,10 +141,12 @@
 <div class="mt-3"></div>
 <table style="width:100%" class="table table-striped table-light text-center">
     <thead>
+        <th class="align-middle">No.</th>
         <th>Barcode</th>
         <th>Nama Barang</th>
         <th>Jumlah</th>
         <th>Harga per pcs</th>
+        <th>Subtotal</th>
         <th>Aksi</th>
     </thead>
     <tbody>
@@ -105,19 +157,32 @@
             </tr>
         <?php endif; ?>
 
-        <?php $i = 1 ?>
+        <?php $i = 1;
+        $jml = 0;
+        $harga = 0 ?>
         <?php foreach ($data['items'] as $item) : ?>
             <tr>
+                <td class="align-middle"><?= $i ?>.</td>
                 <td class="align-middle"><?= $item['barcode'] ?></td>
                 <td class="align-middle"><?= $item['nama'] ?></td>
                 <td class="align-middle"><?= $item['kuantitas'] ?></td>
-                <td class="align-middle"><?= $item['harga'] ?></td>
+                <td class="align-middle"><?= rupiah($item['harga']) ?></td>
+                <td class="align-middle"><?= rupiah($item['kuantitas'] * $item['harga']) ?></td>
                 <td class="align-middle">
                     <button type="button" class="btn btn-xs btn-danger" href="#" title="delete" onclick="processDeleteItem('<?= $item['id'] ?>', '<?= $item['nama'] ?>')"><i class="fa-solid fa-trash-can bigger-120"></i></button>
                 </td>
             </tr>
-            <?php $i++ ?>
+            <?php $jml += $item['kuantitas'];
+            $harga += $item['kuantitas'] * $item['harga'];
+            $i++; ?>
         <?php endforeach; ?>
+        <tr>
+            <td class="align-middle fw-bold" colspan="3">Total</td>
+            <td class="align-middle fw-bold"><?= $jml ?></td>
+            <td class="align-middle fw-bold">Total</td>
+            <td class="align-middle fw-bold"><?= $harga ?></td>
+            <td class="align-middle fw-bold"></td>
+        </tr>
     </tbody>
 </table>
 <audio id="beepAudio">

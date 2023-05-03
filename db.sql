@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 01:47 AM
+-- Generation Time: May 03, 2023 at 06:28 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -48,7 +48,7 @@ CREATE TABLE `inv_keluar` (
 --
 
 INSERT INTO `inv_keluar` (`id`, `issued`, `referenceNumber`, `deskripsi`, `timestamp`, `klien`) VALUES
-('IM-1682602365-wm3vIc7T7S', 0, '(90)DTL8713002537A1(91)250130', 'Open', 1683037440000, 'julius');
+('IM-1682602365-wm3vIc7T7S', 0, '(90)DTL8713002537A1(91)250130', 'Masih Open', 1683037440000, 'klien-1683084620-MgLSLZQyYf');
 
 -- --------------------------------------------------------
 
@@ -109,6 +109,16 @@ CREATE TABLE `klien` (
   `telepon` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `klien`
+--
+
+INSERT INTO `klien` (`id`, `nama`, `alamat`, `telepon`, `email`) VALUES
+('klien-1683084606-VSHIG01ERB', 'Elgato', 'Bawah meja', '', ''),
+('klien-1683084620-MgLSLZQyYf', 'Jonathan', 'UBM housing', '', ''),
+('klien-1683084649-KEfR81X6Oq', 'Sumber Daya Cipta', 'Di mana mana hatiku senang', '08139453232', 'sdc@sdc.com'),
+('klien-1683084754-kiwxKrAW7z', 'Payes', 'Ndak tau di mana', '', '');
 
 -- --------------------------------------------------------
 
@@ -383,6 +393,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `gambar`
   ADD CONSTRAINT `gambar_ibfk_1` FOREIGN KEY (`idProduk`) REFERENCES `produk` (`id`);
+
+--
+-- Constraints for table `inv_keluar`
+--
+ALTER TABLE `inv_keluar`
+  ADD CONSTRAINT `klien_klien` FOREIGN KEY (`klien`) REFERENCES `klien` (`id`);
 
 --
 -- Constraints for table `penjualan`

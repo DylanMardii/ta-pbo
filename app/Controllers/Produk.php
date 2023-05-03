@@ -88,8 +88,7 @@ class Produk extends BaseController
                 'satuan' => $this->request->getPost('satuan'),
                 'dimensi' => $this->request->getPost('dimensi'),
             ]);
-            $this->response->setHeader('Content-Type', 'application/json');
-            $this->success('Produk berhasil ditambahkan.', 'produk_message');
+            return $this->success('Produk berhasil ditambahkan.', 'produk_message');
         } else {
             $this->produkModel->save([
                 'id' => $this->request->getPost('id'),

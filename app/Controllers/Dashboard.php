@@ -70,13 +70,16 @@ class Dashboard extends BaseController
         if ($this->role != 'operator') return redirect()->to('user/login');
         $invKeluarModel = new \App\Models\InvKeluarModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
+        $klienModel = new \App\Models\KlienModel();
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
+                'klien' => $klienModel->findAll(),
                 'total' => $invKeluarModel->countAll(),
                 'q' => $q,
                 'invoices' => $invKeluarModel->select('inv_keluar.*, klien.nama as klien')->join('klien', 'inv_keluar.klien = klien.id')->like('referenceNumber', $q)->orLike('klien', $q)->orLike('deskripsi', $q)->orderBy('timestamp', 'DESC')->paginate(5),
+
             ],
             'pager' => $invKeluarModel->pager
         ];

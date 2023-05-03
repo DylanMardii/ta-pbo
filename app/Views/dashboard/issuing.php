@@ -38,7 +38,11 @@
                     </div>
                     <div class="m-1">
                         <label for="Klien" class="form-label mt-0">Klien</label>
-                        <input type="text" name="klien" class="form-control" placeholder="Klien" aria-label="Klien" aria-describedby="basic-addon2" id="klien">
+                        <select name="klien" class="form-select" style="width: 270px;" value="" aria-label="Role" id="selectKlien">
+                            <?php foreach ($data['klien'] as $klien) :  ?>
+                                <option value="<?= $klien['id'] ?>"><?= $klien['nama'] ?></option>
+                            <?php endforeach;  ?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -97,6 +101,9 @@
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="<?= base_url('style/select2-bs4.min.css') ?>" rel="stylesheet">
 </link>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -137,9 +144,9 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `referenceNumber=${$('#referenceNumber').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&klien=${$('#klien').val()}`
+            body: `referenceNumber=${$('#referenceNumber').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&klien=${$('#selectKlien').val()}`
         }).then((response) => response.json()).then((res) => {
-            // window.location.href = '/dashboard/issuing';
+            window.location.href = '/dashboard/issuing';
         });
         e.preventDefault();
         return false;
@@ -154,6 +161,13 @@
         $('#waktuMasuk').val(d.toISOString().slice(0, 19));
         invoiceModal.show();
     }
+
+
+    $('#selectKlien').select2({
+        placeholder: 'Pilih klien',
+        theme: 'bootstrap4',
+        dropdownParent: $("#invoiceModal"),
+    });
 </script>
 <script type="module">
     import {
