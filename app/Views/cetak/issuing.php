@@ -83,25 +83,43 @@ function terbilang($nilai)
                     <div style="font-size: 12px; text-align:center; margin-top: .25rem;">Jl. Dikenang Mantan No 5 Kec. Padadia Kab. Rumahnya Jawa Barat-12345</div>
                     <div style="font-size: 12px; text-align:center; margin-top: .25rem;">Tel: 0812-3456-7891 | WA: 0821-3456-8876 | E-Mail: mail@stockin.com </div>
                 </div>
-                <hr style="margin-top: 1rem; margin-bottom: 1rem;">
-                <h5 style=" font-size: 18px; margin: 0; padding-bottom: 0; margin-top: 10px;">Invoice Keluar</h5>
-                <table style="border: 1px solid white !important;" cellspacing="0" cellpadding="0">
-                    <tr style=" font-size: 12px;">
-                        <th style="text-align:left; padding-top: .5rem;">Dicetak pada</th>
-                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
-                        <td style="padding-top: .5rem"><?= $date ?></td>
-                    </tr>
-                    <tr style="font-size: 12px;">
-                        <th style="text-align:left; padding-top: .5rem;">Nomor Referensi</th>
-                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
-                        <td style="padding-top: .5rem"><?= $ref ?></td>
-                    </tr>
-                    <tr style="font-size: 12px;">
-                        <th style="text-align:left; padding-top: .5rem;">Klien</th>
-                        <th style="padding: .5rem .25rem 0 .25rem;" class="pe-2">:</th>
-                        <td style="padding-top: .5rem"><?= $klien ?></td>
+                <hr style="margin-top: 1rem; margin-bottom: .5rem;">
+                <table style="border: 1px solid white !important; width: 100%;" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <h5 style="font-size: 12px; margin: 0; padding-bottom: 0;">Informasi Klien:</h5>
+                            <table style="border: 1px solid white !important;" cellspacing="0" cellpadding="0">
+                                <tr style=" font-size: 12px;">
+                                    <th style="padding-top:.3rem;text-align:left;">Nama</th>
+                                    <th style="padding-top:.3rem;padding-right: .25rem;" class="pe-2">:</th>
+                                    <td style="padding-top:.3rem;"><?= empty($klien['nama']) ? '(tidak diketahui)' : $klien['nama']  ?></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <th style="padding-top:.3rem;text-align:left;">Alamat</th>
+                                    <th style="padding-top:.3rem;padding-right: .25rem;" class="pe-2">:</th>
+                                    <td style="padding-top:.3rem;"><?= empty($klien['alamat']) ? '(tidak diketahui)' : $klien['alamat'] ?></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <th style="padding-top:.3rem;text-align:left;">Telepon</th>
+                                    <th style="padding-top:.3rem;padding-right: .25rem;" class="pe-2">:</th>
+                                    <td style="padding-top:.3rem;"><?= empty($klien['telepon']) ? "-" : $klien['telepon'] ?></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <th style="padding-top:.3rem;text-align:left;">Email</th>
+                                    <th style="padding-top:.3rem;padding-right: .25rem;" class="pe-2">:</th>
+                                    <td style="padding-top:.3rem;"><?= empty($klien['email']) ? "-" : $klien['email'] ?></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="vertical-align:top;">
+                            <h5 style="font-size: 18px; margin: 0; padding-bottom: 0; text-align:right;">Invoice Keluar</h5>
+                            <p style="font-size: 12px; text-align: right; margin-top: 5px; margin-bottom: 0px; padding-bottom: 0;">Ref: <?= $ref ?></p>
+                            <p style="font-size: 12px; text-align: right; margin-top: 5px; margin-bottom: 0px; padding-bottom: 0;">Dicetak pada: <?= $date ?></p>
+                        </td>
+
                     </tr>
                 </table>
+
                 <table style="border: 1px solid black; text-align: center; margin-top: .75rem; margin-bottom: .75rem; width: 100%;" cellspacing="0">
                     <thead>
                         <tr style="font-size: 12px;">
