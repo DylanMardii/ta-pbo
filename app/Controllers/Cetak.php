@@ -25,6 +25,7 @@ class Cetak extends BaseController
         $data = [
             'title' => 'Invoice',
             'ref' => $dataInvoice['referenceNumber'],
+            'pajak' => $dataInvoice['pajak'],
             'date' => strftime("%d %B %Y %H:%M:%S", $dataInvoice['timestamp'] / 1000),
             'klien' => $dataKlien,
             'products' => $produk

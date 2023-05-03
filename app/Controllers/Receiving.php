@@ -148,10 +148,12 @@ class Receiving extends BaseController
             return redirect()->to('/dashboard/receiving');
         }
 
+        $supplierModel = new \App\Models\SupplierModel();
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
+                'supplier' => $supplierModel->findAll(),
                 'invoice' => $invoiceData,
                 'items' => $penyetokanModel->where('idInvoice', $id)->findAll()
             ]

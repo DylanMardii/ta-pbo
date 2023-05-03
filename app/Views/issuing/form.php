@@ -79,33 +79,44 @@ function terbilang($nilai)
     <h3><i class="fa-solid fa-file-invoice"></i> INVOICE KELUAR</h3>
     <hr>
     <form class="input-group mb-2" method="post" id="invoiceForm">
-        <input type="hidden" name="id" id="invoiceId" value="<?= $data['invoice']['id'] ?>">
-        <div class="m-1">
-            <label for="Reference Number" class="form-label mt-0">Nomor Referensi</label>
-            <input required type="text" name="referenceNumber" value="<?= $data['invoice']['referenceNumber'] ?>" class="form-control" placeholder="Reference Number" aria-label="Reference Number" aria-describedby="basic-addon2" id="referenceNumber">
-        </div>
-        <div class="m-1">
-            <label for="Waktu Masuk" class="form-label mt-0">Waktu masuk</label>
-            <input required type="datetime-local" name="waktuMasuk" value="<?= date('Y-m-d\TH:i:s', $data['invoice']['timestamp'] / 1000) ?>" class="form-control" placeholder="Waktu Masuk" aria-label="Waktu Masuk" aria-describedby="basic-addon2" id="waktuMasuk">
-        </div>
-        <div class="m-1">
-            <label for="klien" class="form-label mt-0">Klien</label>
-            <select name="klien" class="form-select" style="width: 270px;" value="<?= $data['invoice']['klien'] ?>" aria-label="Role" id="selectKlien">
-                <?php foreach ($data['klien'] as $klien) :  ?>
-                    <option value="<?= $klien['id'] ?>"><?= $klien['nama'] ?></option>
-                <?php endforeach;  ?>
-            </select>
-        </div>
-        <div class="m-1">
-            <label for="Status" class="form-label mt-0">Status</label>
-            <input required type="text" name="status" class="form-control" value="<?= $data['invoice']['deskripsi'] ?>" placeholder="Status" aria-label="Status" aria-describedby="basic-addon2" id="status">
-        </div>
-        <div class="m-1 d-inline-flex align-items-end">
-            <div class="d-inline">
-                <button class="btn btn-warning" type="submit">Simpan</button>
+        <div>
+            <input type="hidden" name="id" id="invoiceId" value="<?= $data['invoice']['id'] ?>">
+            <div class="m-1">
+                <label for="Reference Number" class="form-label mt-0">Nomor Referensi</label>
+                <input required type="text" name="referenceNumber" value="<?= $data['invoice']['referenceNumber'] ?>" class="form-control" placeholder="Reference Number" aria-label="Reference Number" aria-describedby="basic-addon2" id="referenceNumber">
             </div>
-            <div class="d-inline">
-                <button type="button" class="btn btn-danger ms-2" onclick="processDeleteInvoice('Apakah anda yakin ingin menghapus invoice ini?', '<?= $data['invoice']['id'] ?>')">Hapus</button>
+            <div class="m-1">
+                <label for="Waktu Masuk" class="form-label mt-0">Waktu masuk</label>
+                <input required type="datetime-local" name="waktuMasuk" value="<?= date('Y-m-d\TH:i:s', $data['invoice']['timestamp'] / 1000) ?>" class="form-control" placeholder="Waktu Masuk" aria-label="Waktu Masuk" aria-describedby="basic-addon2" id="waktuMasuk">
+            </div>
+        </div>
+        <div class="d-block">
+            <div class="m-1">
+                <label for="klien" class="form-label mt-0">Klien</label>
+                <select name="klien" class="form-select" style="width: 270px;" value="<?= $data['invoice']['klien'] ?>" aria-label="Role" id="selectKlien">
+                    <?php foreach ($data['klien'] as $klien) :  ?>
+                        <option value="<?= $klien['id'] ?>"><?= $klien['nama'] ?></option>
+                    <?php endforeach;  ?>
+                </select>
+            </div>
+            <div class="m-1">
+                <label for="Status" class="form-label mt-0">Status</label>
+                <input required type="text" name="status" class="form-control" value="<?= $data['invoice']['deskripsi'] ?>" placeholder="Status" aria-label="Status" aria-describedby="basic-addon2" id="status">
+            </div>
+
+        </div>
+        <div class="d-flex flex-row align-items-end">
+            <div class="m-1">
+                <label for="Pajak" class="form-label mt-0">Pajak (%)</label>
+                <input required type="text" name="pajak" class="form-control" value="<?= $data['invoice']['pajak'] ?>" placeholder="Pajak" aria-label="Pajak" aria-describedby="basic-addon2" id="pajak">
+            </div>
+            <div class="m-1 d-flex align-items-end">
+                <div class="d-inline">
+                    <button class="btn btn-warning" type="submit">Simpan</button>
+                </div>
+                <div class="d-inline">
+                    <button type="button" class="btn btn-danger ms-2" onclick="processDeleteInvoice('Apakah anda yakin ingin menghapus invoice ini?', '<?= $data['invoice']['id'] ?>')">Hapus</button>
+                </div>
             </div>
         </div>
     </form>
@@ -177,11 +188,17 @@ function terbilang($nilai)
             $i++; ?>
         <?php endforeach; ?>
         <tr>
-            <td class="align-middle fw-bold" colspan="3">Total</td>
-            <td class="align-middle fw-bold"><?= $jml ?></td>
-            <td class="align-middle fw-bold">Total</td>
-            <td class="align-middle fw-bold"><?= $harga ?></td>
-            <td class="align-middle fw-bold"></td>
+            <td class="align-middle text-end fw-bold" colspan="5">Subtotal</td>
+            <td class="align-middle"><?= rupiah($harga) ?></td>
+            <td class="align-middle fw-bold" rowspan="3"></td>
+        </tr>
+        <tr>
+            <td class="align-middle text-end fw-bold" colspan="5">Pajak (<?= $data['invoice']['pajak'] ?>%)</td>
+            <td class="align-middle"><?= rupiah($data['invoice']['pajak'] / 100 * $harga) ?></td>
+        </tr>
+        <tr>
+            <td class="align-middle text-end fw-bold" colspan="5">Total setelah pajak</td>
+            <td class="align-middle"><?= rupiah($harga + $data['invoice']['pajak'] / 100 * $harga) ?></td>
         </tr>
     </tbody>
 </table>
@@ -326,7 +343,7 @@ function terbilang($nilai)
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&klien=${$('#selectKlien').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
+            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&pajak=${$('#pajak').val()}&klien=${$('#selectKlien').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = `/issuing/form/${$('#invoiceId').val()}`;
         });

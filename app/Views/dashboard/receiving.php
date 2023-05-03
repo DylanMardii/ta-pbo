@@ -38,7 +38,11 @@
                     </div>
                     <div class="m-1">
                         <label for="Supplier" class="form-label mt-0">Supplier</label>
-                        <input type="text" name="supplier" class="form-control" placeholder="Supplier" aria-label="Supplier" aria-describedby="basic-addon2" id="supplier">
+                        <select name="supplier" class="form-select" style="width: 270px;" value="" aria-label="Role" id="selectSupplier">
+                            <?php foreach ($data['supplier'] as $supplier) :  ?>
+                                <option value="<?= $supplier['id'] ?>"><?= $supplier['nama'] ?></option>
+                            <?php endforeach;  ?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -94,7 +98,9 @@
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
-</link>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="<?= base_url('style/select2-bs4.min.css') ?>" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const invoiceModal = new bootstrap.Modal(document.getElementById('invoiceModal'), {
@@ -134,7 +140,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `referenceNumber=${$('#referenceNumber').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&supplier=${$('#supplier').val()}`
+            body: `referenceNumber=${$('#referenceNumber').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&supplier=${$('#selectSupplier').val()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = '/dashboard/receiving';
         });
@@ -151,6 +157,12 @@
         $('#waktuMasuk').val(d.toISOString().slice(0, 19));
         invoiceModal.show();
     }
+
+    $('#selectSupplier').select2({
+        placeholder: 'Pilih klien',
+        theme: 'bootstrap4',
+        dropdownParent: $("#invoiceModal"),
+    });
 </script>
 <script type="module">
     import {

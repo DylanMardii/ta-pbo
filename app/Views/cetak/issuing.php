@@ -149,10 +149,16 @@ function terbilang($nilai)
                             $totalBeli += $produk['kuantitas'] * $produk['harga']; ?>
                         <?php endforeach; ?>
                         <tr style="font-size: 12px;">
-                            <td style="border: 1px solid black; padding: .25rem .25rem;" colspan="3" class="align-middle">Jumlah barang</td>
-                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= $jml ?></td>
-                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle">Total</td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem; text-align: right; font-weight: bold;" colspan="5" class="text-center align-middle">Subtotal</td>
                             <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($totalBeli); ?></td>
+                        </tr>
+                        <tr style="font-size: 12px;">
+                            <td style="border: 1px solid black; padding: .25rem .25rem; text-align: right; font-weight: bold;" colspan="5" class="text-center align-middle">Pajak (<?= $pajak ?>%)</td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem;" class="text-center align-middle"><?= rupiah($pajak / 100 * $totalBeli); ?></td>
+                        </tr>
+                        <tr style="font-size: 12px;">
+                            <td style="border: 1px solid black; padding: .25rem .25rem; text-align: right; font-weight: bold;" colspan="5" class="text-center align-middle">Total setelah pajak</td>
+                            <td style="border: 1px solid black; padding: .25rem .25rem; font-weight: bold;" class="text-center align-middle"><?= rupiah($totalBeli + $pajak / 100 * $totalBeli); ?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -163,9 +169,9 @@ function terbilang($nilai)
                         <td><?= $i - 1 ?></td>
                     </tr>
                     <tr style="font-size: 12px;">
-                        <th style="text-align:left;">Total harga beli</th>
+                        <th style="text-align:left;">Total setelah pajak</th>
                         <th class="pe-2">:</th>
-                        <td><?= rupiah($totalBeli) ?> (<?= terbilang($totalBeli) ?> rupiah)</td>
+                        <td><?= rupiah($totalBeli + $pajak / 100 * $totalBeli); ?> (<?= terbilang($totalBeli + $pajak / 100 * $totalBeli) ?> rupiah)</td>
                     </tr>
                 </table>
                 <hr style="margin-top: 1rem;">

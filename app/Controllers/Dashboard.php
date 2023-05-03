@@ -92,13 +92,15 @@ class Dashboard extends BaseController
         if ($this->role != 'operator') return redirect()->to('user/login');
         $invMasuk = new \App\Models\InvMasukModel();
         $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
+        $supplierModel = new \App\Models\SupplierModel();
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
                 'total' => $invMasuk->countAll(),
+                'supplier' => $supplierModel->findAll(),
                 'q' => $q,
-                'invoices' => $invMasuk->like('referenceNumber', $q)->orLike('supplier', $q)->orLike('deskripsi', $q)->orderBy('timestamp', 'DESC')->paginate(5),
+                'invoices' => $invMasuk->select('inv_masuk.*, supplier.nama as supplier')->like('referenceNumber', $q)->orLike('supplier', $q)->orLike('deskripsi', $q)->join('supplier', 'inv_masuk.supplier = supplier.id', 'left')->orderBy('timestamp', 'DESC')->paginate(5),
             ],
             'pager' => $invMasuk->pager
         ];
@@ -190,10 +192,16 @@ class Dashboard extends BaseController
     {
         if ($this->role != 'manager') return redirect()->to('user/login');
         $supplierModel = new \App\Models\SupplierModel();
+        $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
-            'data' => []
+            'data' => [
+                'supplier' => $supplierModel->like('nama', $q)->orLike('alamat', $q)->orLike('telepon', $q)->orderBy('nama')->paginate(5),
+                'total' => $supplierModel->countAll(),
+                'q' => $q,
+            ],
+            'pager' => $supplierModel->pager,
         ];
         return view('dashboard/supplier', $data);
     }

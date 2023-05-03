@@ -40,7 +40,11 @@
         </div>
         <div class="m-1">
             <label for="Supplier" class="form-label mt-0">Supplier</label>
-            <input required type="text" name="supplier" class="form-control" value="<?= $data['invoice']['supplier'] ?>" placeholder="Supplier" aria-label="Supplier" aria-describedby="basic-addon2" id="supplier">
+            <select name="supplier" class="form-select" style="width: 270px;" value="" aria-label="Role" id="selectSupplier">
+                <?php foreach ($data['supplier'] as $supplier) :  ?>
+                    <option value="<?= $supplier['id'] ?>"><?= $supplier['nama'] ?></option>
+                <?php endforeach;  ?>
+            </select>
         </div>
         <div class="m-1">
             <label for="Status" class="form-label mt-0">Status</label>
@@ -124,8 +128,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<link href="<?= base_url('style/select2-bs4.min.css') ?>" rel="stylesheet">
-</link>
+<link href="<?= base_url('style/select2-bs4.min.css') ?>" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     const inputProdukModal = new bootstrap.Modal('#inputProdukModal');
@@ -185,6 +188,11 @@
                 },
             }
         });
+        $('#selectSupplier').select2({
+            placeholder: 'Pilih klien',
+            theme: 'bootstrap4',
+        });
+        $("#selectSupplier").val('<?= $data['invoice']['supplier'] ?>').trigger("change");
     });
 
     async function processDeleteInvoice(name, id) {
@@ -252,7 +260,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&supplier=${$('#supplier').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
+            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&supplier=${$('#selectSupplier').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = `/receiving/form/${$('#invoiceId').val()}`;
         });

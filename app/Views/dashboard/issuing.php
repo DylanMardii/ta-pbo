@@ -30,7 +30,7 @@
                 <div class="input-group mb-2">
                     <div class="m-1">
                         <label for="Reference Number" class="form-label mt-0">Reference Number</label>
-                        <input type="text" name="referenceNumber" class="form-control" placeholder="Reference Number" aria-label="Reference Number" aria-describedby="basic-addon2" id="referenceNumber">
+                        <input required type="text" name="referenceNumber" class="form-control" placeholder="Reference Number" aria-label="Reference Number" aria-describedby="basic-addon2" id="referenceNumber">
                     </div>
                     <div class="m-1">
                         <label for="Waktu Masuk" class="form-label mt-0">Waktu masuk</label>
@@ -38,11 +38,15 @@
                     </div>
                     <div class="m-1">
                         <label for="Klien" class="form-label mt-0">Klien</label>
-                        <select name="klien" class="form-select" style="width: 270px;" value="" aria-label="Role" id="selectKlien">
+                        <select required name="klien" class="form-select" style="width: 270px;" value="" aria-label="Role" id="selectKlien">
                             <?php foreach ($data['klien'] as $klien) :  ?>
                                 <option value="<?= $klien['id'] ?>"><?= $klien['nama'] ?></option>
                             <?php endforeach;  ?>
                         </select>
+                    </div>
+                    <div class="m-1" style="width: 150px;">
+                        <label for="pajak" class="form-label mt-0">Pajak (%)</label>
+                        <input required type="text" name="pajak" class="form-control" placeholder="Pajak (%)" aria-label="Pajak" aria-describedby="basic-addon2" id="pajak">
                     </div>
                 </div>
             </div>
@@ -144,7 +148,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `referenceNumber=${$('#referenceNumber').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&klien=${$('#selectKlien').val()}`
+            body: `referenceNumber=${$('#referenceNumber').val()}&pajak=${$('#pajak').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&klien=${$('#selectKlien').val()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = '/dashboard/issuing';
         });
@@ -158,6 +162,7 @@
         $("input").val('');
         $("select").val('');
         $("select").trigger('change');
+        $('#pajak').val(0);
         $('#waktuMasuk').val(d.toISOString().slice(0, 19));
         invoiceModal.show();
     }

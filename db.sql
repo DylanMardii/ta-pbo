@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 06:28 AM
+-- Generation Time: May 03, 2023 at 05:20 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -36,7 +36,7 @@ CREATE TABLE `gambar` (
 
 CREATE TABLE `inv_keluar` (
   `id` varchar(255) NOT NULL,
-  `issued` tinyint(1) NOT NULL,
+  `pajak` double NOT NULL,
   `referenceNumber` varchar(255) NOT NULL,
   `deskripsi` varchar(255) NOT NULL,
   `timestamp` bigint(20) NOT NULL,
@@ -47,8 +47,10 @@ CREATE TABLE `inv_keluar` (
 -- Dumping data for table `inv_keluar`
 --
 
-INSERT INTO `inv_keluar` (`id`, `issued`, `referenceNumber`, `deskripsi`, `timestamp`, `klien`) VALUES
-('IM-1682602365-wm3vIc7T7S', 0, '(90)DTL8713002537A1(91)250130', 'Masih Open', 1683037440000, 'klien-1683084620-MgLSLZQyYf');
+INSERT INTO `inv_keluar` (`id`, `pajak`, `referenceNumber`, `deskripsi`, `timestamp`, `klien`) VALUES
+('IM-1682602365-wm3vIc7T7S', 5, '(90)DTL8713002537A1(91)250130', 'Masih Open', 1683037440000, 'klien-1683084620-MgLSLZQyYf'),
+('IM-1683091007-vcLkO1LWgc', 10, 'ref/asd', 'Open', 1683090999000, 'klien-1683084606-VSHIG01ERB'),
+('IM-1683126271-g8Z8BMVAIC', 10, 'PAY/020923/001', 'Open', 1683126255000, 'klien-1683084754-kiwxKrAW7z');
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,7 @@ CREATE TABLE `inv_masuk` (
 --
 
 INSERT INTO `inv_masuk` (`id`, `issued`, `referenceNumber`, `deskripsi`, `timestamp`, `supplier`) VALUES
-('IM-1682602365-wm3vIc7T7S', 0, '(90)DTL8713002537A1(91)250130', 'Open', 1682602320000, 'SILA');
+('IM-1682602365-wm3vIc7T7S', 0, '(90)DTL8713002537A1(91)250130', 'Open', 1682602320000, 'supplier-1683119186-kgTb9ryWeb');
 
 -- --------------------------------------------------------
 
@@ -116,7 +118,7 @@ CREATE TABLE `klien` (
 
 INSERT INTO `klien` (`id`, `nama`, `alamat`, `telepon`, `email`) VALUES
 ('klien-1683084606-VSHIG01ERB', 'Elgato', 'Bawah meja', '', ''),
-('klien-1683084620-MgLSLZQyYf', 'Jonathan', 'UBM housing', '', ''),
+('klien-1683084620-MgLSLZQyYf', 'Justin Darya Yuswira', 'Jl. aja dlu ga akan dapet', '080808080898', 'justinsifurry@furry.com'),
 ('klien-1683084649-KEfR81X6Oq', 'Sumber Daya Cipta', 'Di mana mana hatiku senang', '08139453232', 'sdc@sdc.com'),
 ('klien-1683084754-kiwxKrAW7z', 'Payes', 'Ndak tau di mana', '', '');
 
@@ -143,7 +145,11 @@ CREATE TABLE `penjualan` (
 
 INSERT INTO `penjualan` (`id`, `idInvoice`, `idProduk`, `sku`, `barcode`, `nama`, `kuantitas`, `harga`) VALUES
 ('JS-1683002708-lsmPwHo34S', 'IM-1682602365-wm3vIc7T7S', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', 1, 22000),
-('JS-1683070428-cMKSDMihnO', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', 5, 100000);
+('JS-1683070428-cMKSDMihnO', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', 5, 100000),
+('JS-1683091852-AMOCbvsERt', 'IM-1683091007-vcLkO1LWgc', 'produk-1683091836-0Sd6HTouhI', '(90)MD265211001078(91)231029', '8886008101053', 'Aqua ', 11, 4000),
+('JS-1683092274-t9UVNF5PSo', 'IM-1682602365-wm3vIc7T7S', 'produk-1683091836-0Sd6HTouhI', '(90)MD265211001078(91)231029', '8886008101053', 'Aqua ', 11, 4000),
+('JS-1683125496-v8chANgg07', 'IM-1683091007-vcLkO1LWgc', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', 2, 16000),
+('JS-1683126571-o6tPdYi0Is', 'IM-1683126271-g8Z8BMVAIC', 'produk-1683091836-0Sd6HTouhI', '(90)MD265211001078(91)231029', '8886008101053', 'Aqua ', 10, 4000);
 
 -- --------------------------------------------------------
 
@@ -169,7 +175,8 @@ CREATE TABLE `penyetokan` (
 INSERT INTO `penyetokan` (`id`, `idInvoice`, `idProduk`, `sku`, `barcode`, `nama`, `kuantitas`, `harga`) VALUES
 ('MS-1683070402-0mttJRvFmO', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', '5', '100000'),
 ('MS-1683071122-2GQ1IgIAWh', 'IM-1682602365-wm3vIc7T7S', 'produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', '5', '35000'),
-('MS-1683071127-nBkPEZ1D4z', 'IM-1682602365-wm3vIc7T7S', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', '5', '22000');
+('MS-1683071127-nBkPEZ1D4z', 'IM-1682602365-wm3vIc7T7S', 'produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', '5', '22000'),
+('MS-1683092380-CE1BpSk7ma', 'IM-1682602365-wm3vIc7T7S', 'produk-1683091836-0Sd6HTouhI', '(90)MD265211001078(91)231029', '8886008101053', 'Aqua ', '10', '4000');
 
 -- --------------------------------------------------------
 
@@ -201,8 +208,10 @@ INSERT INTO `produk` (`id`, `sku`, `barcode`, `nama`, `image`, `kategori`, `desk
 ('produk-1682403030-yH3CNjIcIF', 'a', '8998888170910', 'Marjan Orange', NULL, 'kategori-001', 'Rasa Jeruk', 'Rumah Ben', 35000, 40000, 65, 'satuan-001', '0'),
 ('produk-1682403262-gYMGL6jthV', '', '899888817090', 'Marjan Apel', NULL, 'kategori-001', '', 'Rumah Ben 2', 100000, 20000, 10, 'satuan-001', '30 cm'),
 ('produk-1682423328-r1GU4eW0Bm', '(90)DTL8713002537A1(91)250130', '8998667300675', 'Siladex Biru', NULL, 'kategori-1682422571-DOjROIvQd2', 'Batuk Pilek', '', 20000, 25000, 11, 'satuan-001', '20 cm'),
-('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 22000, 25000, 6, 'satuan-001', ''),
-('produk-1682487494-66CIjdZ8VW', '(90)MD265228049054(91)201210', '8992752011408', 'Vit Air Mineral', NULL, 'kategori-1682423528-jKgpWFRkar', '600 ml', 'UBM', 3500, 4000, 0, 'satuan-001', '600 ml');
+('produk-1682423651-AwyCzOaw3N', '(90)QL031700281(91)230112', '4987176008718', 'Vicks', NULL, 'kategori-1682423524-jfgvGGU8XF', '25g', '', 16000, 21000, 4, 'satuan-001', ''),
+('produk-1682487494-66CIjdZ8VW', '(90)MD265228049054(91)201210', '8992752011408', 'Vit Air Mineral', NULL, 'kategori-1682423528-jKgpWFRkar', '600 ml', 'UBM', 3500, 4000, 0, 'satuan-001', '600 ml'),
+('produk-1683091675-EdKs1EL7sD', '(90)MD265210015032(91)250518', '8992761139018', 'Ades', NULL, 'kategori-1682423528-jKgpWFRkar', 'Air Mineral 600 ml', '', 4000, 5000, 10, 'satuan-001', '600 ml'),
+('produk-1683091836-0Sd6HTouhI', '(90)MD265211001078(91)231029', '8886008101053', 'Aqua ', NULL, 'kategori-1682423528-jKgpWFRkar', '600 ml', '', 4000, 5000, 78, 'satuan-001', '600 ml');
 
 -- --------------------------------------------------------
 
@@ -273,6 +282,14 @@ CREATE TABLE `supplier` (
   `email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id`, `nama`, `alamat`, `telepon`, `email`) VALUES
+('supplier-1683084606-VSHIG01ERB', 'ElSupply', 'Elgato Supply Chain', '08123456789', 'contact@elgato.com'),
+('supplier-1683119186-kgTb9ryWeb', 'Mixue Supply Chain', 'Zhongguo', '+861239123812', 'chatme@mixue.com');
+
 -- --------------------------------------------------------
 
 --
@@ -322,7 +339,8 @@ ALTER TABLE `inv_keluar`
 -- Indexes for table `inv_masuk`
 --
 ALTER TABLE `inv_masuk`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier` (`supplier`);
 
 --
 -- Indexes for table `kategori`
@@ -399,6 +417,12 @@ ALTER TABLE `gambar`
 --
 ALTER TABLE `inv_keluar`
   ADD CONSTRAINT `klien_klien` FOREIGN KEY (`klien`) REFERENCES `klien` (`id`);
+
+--
+-- Constraints for table `inv_masuk`
+--
+ALTER TABLE `inv_masuk`
+  ADD CONSTRAINT `supplier_idSupplier` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`id`);
 
 --
 -- Constraints for table `penjualan`

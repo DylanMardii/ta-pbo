@@ -25,6 +25,7 @@ class Issuing extends BaseController
                 'referenceNumber' => $this->request->getPost('referenceNumber'),
                 'deskripsi' => $this->request->getPost('status'),
                 'timestamp' => $this->request->getPost('waktuMasuk'),
+                'pajak' => $this->request->getPost('pajak'),
                 'klien' => $this->request->getPost('klien'),
             ]);
             return $this->success('Invoice berhasil diperbarui.', 'issuing_message');
@@ -35,6 +36,7 @@ class Issuing extends BaseController
                 'referenceNumber' => $this->request->getPost('referenceNumber'),
                 'deskripsi' => 'Open',
                 'timestamp' => $this->request->getPost('waktuMasuk'),
+                'pajak' => 10,
                 'klien' => $this->request->getPost('klien'),
             ]);
             return $this->success('Invoice berhasil dibuat.', 'issuing_message');

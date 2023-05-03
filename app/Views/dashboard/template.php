@@ -30,7 +30,7 @@
                             <hr style="height: 2px;" class="bg-white">
                         </li>
                         <li class="nav-item">
-                            <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/supplier') ?>"><i class="me-2 fa-solid fa-fw fa-users"></i> Supplier</a>
+                            <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/supplier') ?>"><i class="me-2 fa-solid fa-fw fa-building"></i> Supplier</a>
                             <hr style="height: 2px;" class="bg-white">
                         </li>
                     <?php endif;  ?>
