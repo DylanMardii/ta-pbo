@@ -25,6 +25,14 @@
                             <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/laporan') ?>"><i class="me-2 fa-solid fa-fw fa-chart-simple"></i> Laporan</a>
                             <hr style="height: 2px;" class="bg-white">
                         </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/klien') ?>"><i class="me-2 fa-solid fa-fw fa-users"></i> Klien</a>
+                            <hr style="height: 2px;" class="bg-white">
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-decoration-none text-white fw-medium" href="<?= base_url('dashboard/supplier') ?>"><i class="me-2 fa-solid fa-fw fa-users"></i> Supplier</a>
+                            <hr style="height: 2px;" class="bg-white">
+                        </li>
                     <?php endif;  ?>
                     <?php if ($user['role'] == 'operator') :  ?>
                         <li class="nav-item">

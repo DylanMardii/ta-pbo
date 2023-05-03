@@ -40,7 +40,11 @@
         </div>
         <div class="m-1">
             <label for="klien" class="form-label mt-0">Klien</label>
-            <input required type="text" name="klien" class="form-control" value="<?= $data['invoice']['klien'] ?>" placeholder="klien" aria-label="klien" aria-describedby="basic-addon2" id="klien">
+            <select name="klien" class="form-select" style="width: 270px;" value="<?= $data['invoice']['klien'] ?>" aria-label="Role" id="selectKlien">
+                <?php foreach ($data['klien'] as $klien) :  ?>
+                    <option value="<?= $klien['id'] ?>"><?= $klien['nama'] ?></option>
+                <?php endforeach;  ?>
+            </select>
         </div>
         <div class="m-1">
             <label for="Status" class="form-label mt-0">Status</label>
@@ -185,6 +189,11 @@
                 },
             }
         });
+        $('#selectKlien').select2({
+            placeholder: 'Pilih klien',
+            theme: 'bootstrap4',
+        });
+        $("#selectKlien").val('<?= $data['invoice']['klien'] ?>').trigger("change");
     });
 
     async function processDeleteInvoice(name, id) {
@@ -252,7 +261,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&supplier=${$('#supplier').val()}&klien=${$('#klien').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
+            body: `id=${$('#invoiceId').val()}&referenceNumber=${$('#referenceNumber').val()}&klien=${$('#selectKlien').val()}&status=${$('#status').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = `/issuing/form/${$('#invoiceId').val()}`;
         });

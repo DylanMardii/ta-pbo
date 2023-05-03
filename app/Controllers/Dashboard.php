@@ -76,7 +76,7 @@ class Dashboard extends BaseController
             'data' => [
                 'total' => $invKeluarModel->countAll(),
                 'q' => $q,
-                'invoices' => $invKeluarModel->like('referenceNumber', $q)->orLike('klien', $q)->orLike('deskripsi', $q)->orderBy('timestamp', 'DESC')->paginate(5),
+                'invoices' => $invKeluarModel->select('inv_keluar.*, klien.nama as klien')->join('klien', 'inv_keluar.klien = klien.id')->like('referenceNumber', $q)->orLike('klien', $q)->orLike('deskripsi', $q)->orderBy('timestamp', 'DESC')->paginate(5),
             ],
             'pager' => $invKeluarModel->pager
         ];
@@ -168,11 +168,31 @@ class Dashboard extends BaseController
     public function getKlien()
     {
         if ($this->role != 'manager') return redirect()->to('user/login');
+        $klienModel = new \App\Models\KlienModel();
+        $q = $this->request->getGet('q') == null ? '' : $this->request->getGet('q');
+        $data = [
+            'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
+            'user' => session()->get('user'),
+            'data' => [
+                'klien' => $klienModel->like('nama', $q)->orLike('alamat', $q)->orLike('telepon', $q)->orderBy('nama')->paginate(5),
+                'total' => $klienModel->countAll(),
+                'q' => $q,
+            ],
+            'pager' => $klienModel->pager,
+        ];
+        return view('dashboard/klien', $data);
     }
 
     public function getSupplier()
     {
         if ($this->role != 'manager') return redirect()->to('user/login');
+        $supplierModel = new \App\Models\SupplierModel();
+        $data = [
+            'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
+            'user' => session()->get('user'),
+            'data' => []
+        ];
+        return view('dashboard/supplier', $data);
     }
 
     public function getLaporan()

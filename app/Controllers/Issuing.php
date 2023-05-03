@@ -148,10 +148,12 @@ class Issuing extends BaseController
             return redirect()->to('/dashboard/issuing');
         }
 
+        $klienModel = new \App\Models\KlienModel();
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
+                'klien' => $klienModel->findAll(),
                 'invoice' => $invoiceData,
                 'items' => $penjualanModel->where('idInvoice', $id)->findAll()
             ]
