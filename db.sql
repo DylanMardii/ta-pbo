@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 05:20 PM
+-- Generation Time: May 04, 2023 at 02:29 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -49,8 +49,8 @@ CREATE TABLE `inv_keluar` (
 
 INSERT INTO `inv_keluar` (`id`, `pajak`, `referenceNumber`, `deskripsi`, `timestamp`, `klien`) VALUES
 ('IM-1682602365-wm3vIc7T7S', 5, '(90)DTL8713002537A1(91)250130', 'Masih Open', 1683037440000, 'klien-1683084620-MgLSLZQyYf'),
-('IM-1683091007-vcLkO1LWgc', 10, 'ref/asd', 'Open', 1683090999000, 'klien-1683084606-VSHIG01ERB'),
-('IM-1683126271-g8Z8BMVAIC', 10, 'PAY/020923/001', 'Open', 1683126255000, 'klien-1683084754-kiwxKrAW7z');
+('IM-1683091007-vcLkO1LWgc', 10, 'ELG/040523/001', 'Open', 1683090999000, 'klien-1683084606-VSHIG01ERB'),
+('IM-1683126271-g8Z8BMVAIC', 10, 'PAY/020923/001', 'PAID', 1683126255000, 'klien-1683084754-kiwxKrAW7z');
 
 -- --------------------------------------------------------
 
@@ -117,10 +117,10 @@ CREATE TABLE `klien` (
 --
 
 INSERT INTO `klien` (`id`, `nama`, `alamat`, `telepon`, `email`) VALUES
-('klien-1683084606-VSHIG01ERB', 'Elgato', 'Bawah meja', '', ''),
+('klien-1683084606-VSHIG01ERB', 'Elgato', 'Jl. Lodan Raya No. 170, Ancol, Jakarta Utara', '0821-1122-4756', 'contact@elgato.com'),
 ('klien-1683084620-MgLSLZQyYf', 'Justin Darya Yuswira', 'Jl. aja dlu ga akan dapet', '080808080898', 'justinsifurry@furry.com'),
 ('klien-1683084649-KEfR81X6Oq', 'Sumber Daya Cipta', 'Di mana mana hatiku senang', '08139453232', 'sdc@sdc.com'),
-('klien-1683084754-kiwxKrAW7z', 'Payes', 'Ndak tau di mana', '', '');
+('klien-1683084754-kiwxKrAW7z', 'Payes', 'Jl. Pademangan IV, Kec. Pademangan, Jakarta Utara, DKI Jakarta', '0878-7465-5555', 'chatwith@payes.com');
 
 -- --------------------------------------------------------
 
