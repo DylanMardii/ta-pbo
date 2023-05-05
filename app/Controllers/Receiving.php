@@ -20,6 +20,14 @@ class Receiving extends BaseController
     public function postIndex()
     {
         helper('text');
+        if (!$this->validate([
+            'referenceNumber' => 'required',
+            'waktuMasuk' => 'required',
+            'supplier' => 'required',
+        ])) {
+            return $this->badRequest('Pastikan semua field terisi.', 'issuing_message');
+        }
+
         if ($this->request->getPost('id') !== null) {
             $this->invMasukModel->update($this->request->getPost('id'), [
                 'referenceNumber' => $this->request->getPost('referenceNumber'),
@@ -29,6 +37,11 @@ class Receiving extends BaseController
             ]);
             return $this->success('Invoice berhasil diperbarui.', 'receiving_message');
         } else {
+            if (!$this->validate([
+                'referenceNumber' => 'is_unique[inv_masuk.referenceNumber]',
+            ])) {
+                return $this->badRequest('Nomor referensi sudah terdaftar.', 'receiving_message');
+            }
             $id = 'IM-' . time() . '-' . random_string('alnum', 10);
             $this->invMasukModel->insert([
                 'id' => $id,

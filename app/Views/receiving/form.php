@@ -239,7 +239,7 @@
     }
 
     async function processDeleteItem(entryId, productName) {
-        let isTrue = confirm(`Apakah anda benar ingin menghapus ${productName}?`);
+        let isTrue = confirm(`Apakah anda benar ingin menghapus ${productName}?\nStok produk akan dikembalikan ke semula.`);
         if (isTrue) {
             fetch('/receiving/deleteProduct', {
                 method: 'POST',

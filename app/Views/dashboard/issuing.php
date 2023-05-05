@@ -151,6 +151,8 @@
             body: `referenceNumber=${$('#referenceNumber').val()}&pajak=${$('#pajak').val()}&waktuMasuk=${new Date($('#waktuMasuk').val()).getTime()}&klien=${$('#selectKlien').val()}`
         }).then((response) => response.json()).then((res) => {
             window.location.href = '/dashboard/issuing';
+        }).catch(e => {
+            alert('Terjadi kesalahan.');
         });
         e.preventDefault();
         return false;
@@ -163,6 +165,7 @@
         $("select").val('');
         $("select").trigger('change');
         $('#pajak').val(0);
+        $('#referenceNumber').val(`SCK/${new Date().getDate()}${new Date().getMonth()}${new Date().getFullYear() % 2000}/${new Date().getHours()}${new Date().getMinutes()}`);
         $('#waktuMasuk').val(d.toISOString().slice(0, 19));
         invoiceModal.show();
     }

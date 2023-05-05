@@ -208,7 +208,7 @@ class Dashboard extends BaseController
 
     public function getLaporan()
     {
-        if ($this->role != 'operator' || $this->role != 'manager') return redirect()->to('user/login');
+        if ($this->role != 'operator' && $this->role != 'manager') return redirect()->to('user/login');
         return redirect()->to('cetak/laporan');
     }
 }

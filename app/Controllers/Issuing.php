@@ -20,6 +20,15 @@ class Issuing extends BaseController
     public function postIndex()
     {
         helper('text');
+        if (!$this->validate([
+            'referenceNumber' => 'required',
+            'waktuMasuk' => 'required',
+            'pajak' => 'required',
+            'klien' => 'required',
+        ])) {
+            return $this->badRequest('Pastikan semua field terisi.', 'issuing_message');
+        }
+
         if ($this->request->getPost('id') !== null) {
             $this->invKeluarModel->update($this->request->getPost('id'), [
                 'referenceNumber' => $this->request->getPost('referenceNumber'),
@@ -30,6 +39,11 @@ class Issuing extends BaseController
             ]);
             return $this->success('Invoice berhasil diperbarui.', 'issuing_message');
         } else {
+            if (!$this->validate([
+                'referenceNumber' => 'is_unique[inv_keluar.referenceNumber]',
+            ])) {
+                return $this->badRequest('Nomor referensi sudah terdaftar.', 'issuing_message');
+            }
             $id = 'IM-' . time() . '-' . random_string('alnum', 10);
             $this->invKeluarModel->insert([
                 'id' => $id,

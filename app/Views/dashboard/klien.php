@@ -83,7 +83,7 @@
                     <td class="text-center align-middle"><?= $klien['alamat'] == "" ? '-' : $klien['alamat'] ?></td>
                     <td class="text-center align-middle"><?= $klien['telepon'] == "" ? '-' : $klien['telepon'] ?></td>
                     <td class="text-center align-middle"><?= $klien['email'] == "" ? '-' : $klien['email'] ?></td>
-                    <td class="text-center align-middle">
+                    <td class="text-center align-middle d-flex">
                         <button type="button" onclick="doc.prepareEditForm('<?= $klien['id'] ?>')" class="btn btn-xs btn-primary text-white" title="Edit">
                             <i class="fa fa-pencil bigger-120"></i>
                         </button>

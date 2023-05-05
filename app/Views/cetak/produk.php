@@ -143,7 +143,7 @@ function terbilang($nilai)
                         <div style="text-align: right;">
                             <div style="font-size: 14px; font-weight:700;margin-top:.5rem;">PT StockIn Indonesia</div>
                             <div style="font-size: 14px; margin-top:.5rem;">yang bertanda tangan di bawah ini</div>
-                            <div style="font-size: 14px; margin-top: 5rem; font-weight:700;">Manager</div>
+                            <div style="font-size: 14px; margin-top: 5rem; font-weight:700;"><?= session()->get('user')['name'] ?></div>
                         </div>
                     </div>
                 </div>
