@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2023 at 04:25 PM
+-- Generation Time: May 06, 2023 at 03:53 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.4
 
@@ -313,7 +313,7 @@ INSERT INTO `user` (`id`, `name`, `username`, `password`, `role`, `avatar`) VALU
 ('user-603de254eb03bc864f6bb36e118e8b5b', 'Dylan Mardi', 'dylanmanager', '$2y$10$Lw9lIG4ljr9RNzEYtfE0BeR6kco9dRXJa.RJXS4wTCIpM5bqop3cS', 'role-bc076', NULL),
 ('user-70ae515b45b20920005e6abcf66fdd2a', 'Dylan Mardi', 'dylanoperator', '$2y$10$FgIq0XwaNMzqvgP6XNm3GeSBOxp8F7E79MCPKGtzt3TWqL.M31UH.', 'role-fdae0', NULL),
 ('user-96c53ae1c6f38b8a6325d400ce21cd9b', 'Dylan Mardi', 'dylanadmin', '$2y$10$gGDL7pPbBIkjL1UPAbJ3Pek9VKiKV1o7SUemGQhwHkN1RRxna.jaS', 'role-08c2e', NULL),
-('user-bedfc0a950f34f1abc24d64089a63cde', 'zxc', 'cxz', '$2y$10$6766TVxsGwAEQoD2XtjUYuUl8lMNM2BJIzDf6VplocdkM33f.VYyO', 'role-08c2e', NULL),
+('user-ca4d876d6a3a000e15942b44e92eab9f', 'Raphael Benedict', 'baneneb', '$2y$10$Nni08.3P/D05gW7QjWiPDuI4yLE2lKnMS2u8AuFl7SHgwewXM0CUW', 'role-08c2e', NULL),
 ('user-d31ec6d5503d8d8348292d7031eff4e4', 'Administrator', 'admin', '$2y$10$n7C1O7WkMSsTubaee1A05OH.itgacmu1.9lmSvzvWl0bmwAyDNeVq', 'role-08c2e', NULL),
 ('user-e76a9633c50a34c2de11866bb34aba27', 'Manager', 'manager', '$2y$10$qRiiXC32N6uuARICk3ZI5eaV1ja4aSrYM8pYLiR7ghlY7EzhxrsIK', 'role-bc076', NULL),
 ('user-f7e8992831909d670f640e08593227df', 'Operator', 'operator', '$2y$10$YjEB.1WFsVwROSF300r5a.XmeEzd8wDc2auj9LK4/B9TAE6X3iJsO', 'role-fdae0', NULL);
