@@ -7,6 +7,8 @@ use App\Models\UserModel;
 use App\Models\RoleModel;
 use CodeIgniter\Files\File;
 
+use function PHPUnit\Framework\isEmpty;
+
 class User extends BaseController
 {
     protected $userModel;
@@ -145,17 +147,18 @@ class User extends BaseController
     {
         if ($this->request->getPost('id') == '') {
             // Create new user
-            $this->validate([
+            if (!$this->validate([
                 'name' => 'required',
                 'password' => 'required',
-                'username' => 'required|is_unique[user.username]',
+                'username' => 'required',
                 'role' => 'required'
-            ]);
+            ])) {
+                return $this->badRequest('Pastikan setiap field terisi.', 'user_message');
+            };
             $id = 'user-' . md5(uniqid(rand(), true));
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
             $role = $this->request->getPost('role');
-
             $this->userModel->insert([
                 'id' => $id,
                 'name' => $this->request->getPost('name'),
@@ -166,16 +169,17 @@ class User extends BaseController
             return $this->success('User berhasil didaftarkan.', 'user_message');
         } else {
             // Update user
-            $this->validate([
+            if (!$this->validate([
                 'name' => 'required',
                 'username' => 'required',
                 'role' => 'required'
-            ]);
+            ])) {
+                return $this->badRequest('Pastikan setiap field terisi.', 'user_message');
+            };
             $id = $this->request->getPost('id');
             $username = $this->request->getPost('username');
             $role = $this->request->getPost('role');
             $password = $this->request->getPost('password');
-
             if ($password != '') {
                 $this->userModel->update($id, [
                     'name' => $this->request->getPost('name'),
@@ -203,6 +207,19 @@ class User extends BaseController
             return $this->success('Data berhasil didapatkan.', 'user_data', $user);
         } else {
             return $this->badRequest('Data tidak ditemukan!');
+        }
+    }
+
+    public function getDelete($id)
+    {
+        if (session()->get('user') == null) return $this->unauthorized();
+        if (session()->get('user')['role'] != 'admin') return $this->forbidden();
+        $user = $this->userModel->where('id', $id)->first();
+        if ($user == null) {
+            return $this->notFound('User tidak ditemukan', 'user_message');
+        } else {
+            $this->userModel->delete($id);
+            return $this->success('User berhasil dihapus.', 'user_message');
         }
     }
 
