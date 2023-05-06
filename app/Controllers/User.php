@@ -143,33 +143,62 @@ class User extends BaseController
 
     public function postDashboardRegistration()
     {
-        if (!$this->validate([
-            'name' => 'required',
-            'password' => 'required',
-            'username' => 'required|is_unique[user.username]',
-        ])) {
-            return $this->badRequest('Username sudah terdaftar!', 'user_message');
+        if ($this->request->getPost('id') == '') {
+            // Create new user
+            $this->validate([
+                'name' => 'required',
+                'password' => 'required',
+                'username' => 'required|is_unique[user.username]',
+                'role' => 'required'
+            ]);
+            $id = 'user-' . md5(uniqid(rand(), true));
+            $username = $this->request->getPost('username');
+            $password = $this->request->getPost('password');
+            $role = $this->request->getPost('role');
+
+            $this->userModel->insert([
+                'id' => $id,
+                'name' => $this->request->getPost('name'),
+                'username' => $username,
+                'password' => password_hash((string) $password, PASSWORD_DEFAULT),
+                'role' => $role,
+            ]);
+            return $this->success('User berhasil didaftarkan.', 'user_message');
+        } else {
+            // Update user
+            $this->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'role' => 'required'
+            ]);
+            $id = $this->request->getPost('id');
+            $username = $this->request->getPost('username');
+            $role = $this->request->getPost('role');
+            $password = $this->request->getPost('password');
+
+            if ($password != '') {
+                $this->userModel->update($id, [
+                    'name' => $this->request->getPost('name'),
+                    'username' => $username,
+                    'role' => $role,
+                    'password' => password_hash((string) $password, PASSWORD_DEFAULT),
+                ]);
+            } else {
+                $this->userModel->update($id, [
+                    'name' => $this->request->getPost('name'),
+                    'username' => $username,
+                    'role' => $role,
+                ]);
+            }
+
+            return $this->success('Data user berhasil diubah.', 'user_message');
         }
-
-        $id = 'user-' . md5(uniqid(rand(), true));
-        $username = $this->request->getVar('username');
-        $password = $this->request->getVar('password');
-        $role = $this->request->getVar('role');
-
-        $this->userModel->insert([
-            'id' => $id,
-            'name' => $this->request->getVar('name'),
-            'username' => $username,
-            'password' => password_hash((string) $password, PASSWORD_DEFAULT),
-            'role' => $role,
-        ]);
-        return $this->success('User berhasil didaftarkan.', 'user_message');
     }
 
     public function getData($id = null)
     {
         if ($id == null) return $this->badRequest('ID tidak ditemukan!');
-        $user = $this->userModel->select('name, username, role')->find($id);
+        $user = $this->userModel->select('name, username, role, id')->find($id);
         if ($user) {
             return $this->success('Data berhasil didapatkan.', 'user_data', $user);
         } else {

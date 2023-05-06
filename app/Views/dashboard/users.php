@@ -35,7 +35,7 @@
                     </div>
                     <div class="col">
                         <label for="Nama" class="form-label mt-0">Username*</label>
-                        <input required type="text" name="username" class="form-control" placeholder="Nama" aria-label="Nama" aria-describedby="basic-addon2" id="Nama">
+                        <input required type="text" name="username" class="form-control" placeholder="Nama" aria-label="Nama" aria-describedby="basic-addon2" id="Username">
                     </div>
                 </div>
                 <div class="input-group row mx-0 mb-2">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="col">
                         <label for="Nama" class="form-label mt-0">Password*</label>
-                        <input required type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" id="Password">
+                        <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" id="Password">
                     </div>
                 </div>
             </div>
@@ -132,19 +132,6 @@
     }
 
     const userModal = new bootstrap.Modal('#userModal')
-
-    $(document).ready(function() {
-        $('#kategoriSelect').select2({
-            placeholder: 'Kategori',
-            theme: 'bootstrap4',
-            dropdownParent: $("#userModal"),
-        });
-        $('#satuanSelect').select2({
-            placeholder: 'Satuan',
-            theme: 'bootstrap4',
-            dropdownParent: $("#userModal"),
-        });
-    });
 
     $("#userForm").submit(async (e) => {
         fetch('/user/dashboardRegistration', {

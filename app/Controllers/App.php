@@ -10,4 +10,9 @@ class App extends BaseController
     {
         return redirect()->to('/user/login');
     }
+
+    public function NotFoundPage()
+    {
+        return view('errors/html/error_404', ['message' => 'Halaman tidak ditemukan. Silakan klik <a href="/">di sini</a> untuk kembali.']);
+    }
 }
