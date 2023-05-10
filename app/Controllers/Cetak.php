@@ -7,11 +7,6 @@ use App\Libraries\Pdfgenerator;
 
 class Cetak extends BaseController
 {
-    public function index()
-    {
-        //
-    }
-
     public function getIssuing($id = null)
     {
         if (session()->get('user') == null) return redirect()->to('user/login');

@@ -7,8 +7,6 @@ use App\Models\UserModel;
 use App\Models\RoleModel;
 use CodeIgniter\Files\File;
 
-use function PHPUnit\Framework\isEmpty;
-
 class User extends BaseController
 {
     protected $userModel;
@@ -19,17 +17,6 @@ class User extends BaseController
     {
         $this->userModel = new UserModel();
         $this->roleModel = new RoleModel();
-    }
-
-    public function getIndex()
-    {
-        if (!session()->has('user')) return redirect()->to('user/login');
-        $users = $this->userModel->findAll();
-        $data = [
-            'title' => 'User List',
-            'users' => $users
-        ];
-        return view('user/list', $data);
     }
 
     public function getLogout()

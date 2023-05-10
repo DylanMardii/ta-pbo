@@ -1,11 +1,11 @@
-<?= $this->extend('layout/template') ?>
 <?php $message = session()->getFlashdata('login_message') ?>
-<?= $this->section('content') ?>
 <?php
 function validator($field)
 {
     return array_key_exists($field, validation_errors()) ? "is-invalid" : '';
 } ?>
+<?= $this->extend('layout/template') ?>
+<?= $this->section('content') ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8 col-xl-5 mt-5 p-5">

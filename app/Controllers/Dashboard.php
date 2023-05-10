@@ -41,12 +41,14 @@ class Dashboard extends BaseController
         $measurementModel = new \App\Models\MeasurementModel();
         $produkModel = new \App\Models\ProdukModel();
         $kategoriModel = new \App\Models\KategoriModel();
+        $invKeluarModel = new \App\Models\InvKeluarModel();
+        $invMasukModel = new \App\Models\InvMasukModel();
         $data = [
             'title' => 'Dashboard ' . $this->roleModel->getRoleBySlug($this->role)['label'],
             'user' => session()->get('user'),
             'data' => [
-                'invoice_masuk' => 0,
-                'invoice_keluar' => 0,
+                'invoice_masuk' => $invKeluarModel->countAll(),
+                'invoice_keluar' => $invMasukModel->countAll(),
                 'produk' => $produkModel->countAll(),
                 'satuan' => $measurementModel->countAll(),
                 'kategori' => $kategoriModel->countAll(),

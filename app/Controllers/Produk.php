@@ -34,12 +34,6 @@ class Produk extends BaseController
         }
     }
 
-    public function getDetail($id)
-    {
-        if ($this->role == null) return $this->unauthorized();
-        if ($this->role != 'operator') return $this->forbidden();
-    }
-
     public function getData($id)
     {
         if ($this->role == null) return $this->unauthorized();

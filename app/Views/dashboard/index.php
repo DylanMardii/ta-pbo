@@ -5,15 +5,15 @@
 <div class="row gap-3">
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title fw-semibold">Barang Keluar</h5>
-            <div class="display-4"><?= $data['produk'] ?></div>
+            <h5 class="card-title fw-semibold">Invoice Barang Keluar</h5>
+            <div class="display-4"><?= $data['invoice_keluar'] ?></div>
             <p class="card-text"></p>
         </div>
     </div>
     <div class="card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title fw-semibold">Barang Masuk</h5>
-            <div class="display-4"><?= $data['produk'] ?></div>
+            <h5 class="card-title fw-semibold">Invoice Barang Masuk</h5>
+            <div class="display-4"><?= $data['invoice_masuk'] ?></div>
             <p class="card-text"></p>
         </div>
     </div>
