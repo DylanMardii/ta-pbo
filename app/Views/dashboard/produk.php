@@ -124,9 +124,7 @@
             <?php foreach ($data['produk'] as $produk) : ?>
                 <tr>
                     <td class="text-center align-middle"><?= $i ?>.</td>
-                    <!-- <td class="text-center align-middle"><?= $produk['sku'] == "" ? '-' : $produk['sku'] ?></td> -->
-                    <!-- <td class="text-center align-middle"><span class="d-block" style="font-family: 'Libre Barcode EAN13 Text', cursive; font-size: 3.5rem"><?= $produk['barcode'] ?></span></td> -->
-                    <td class="text-center align-middle"><img style="height: 60px" src="https://barcode.tec-it.com/barcode.ashx?data=<?= $produk['barcode'] ?>&code=EAN13&translate-esc=on" alt="<?= $produk['barcode'] ?>"></td>
+                    <td class="text-center align-middle"><?= $produk['barcode'] == '' ? '<b><i>Tidak ada barcode.</i></b>' : '<img style="height: 60px" src="https://barcode.tec-it.com/barcode.ashx?data=' . $produk['barcode'] . '&code=EAN13&translate-esc=on" alt="' . $produk['barcode'] . '">' ?></td>
                     <td class="text-center align-middle"><?= htmlspecialchars($produk['nama']) ?></td>
                     <td class="text-center align-middle"><?= $produk['kategori'] ?></td>
                     <td class="text-center align-middle"><?= $produk['lokasi'] == "" ? '-' : $produk['lokasi'] ?></td>
